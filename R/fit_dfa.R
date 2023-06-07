@@ -628,6 +628,7 @@ fit_dfa <- function(y = y,
 }
 
 #' Return DFA Stan code
+#' @export
 get_dfa_stancode = function() {
   stanmodels$dfa
 }
