@@ -573,6 +573,7 @@ fit_dfa <- function(y = y,
     mod <- do.call(sampling, sampling_args)
     if (chains > 1) {
       out <- invert_chains(mod, trends = num_trends, print = FALSE)
+      out$code = stanmodels$dfa
     } else {
       e <- rstan::extract(mod, permuted = FALSE)
       ep <- rstan::extract(mod, permuted = TRUE)
@@ -580,6 +581,7 @@ fit_dfa <- function(y = y,
         model = mod, samples_permuted = ep, samples = e,
         monitor = rstan::monitor(e)
       )
+      out$code = stanmodels$dfa
     }
   }
   if(estimation[1]=="optimizing") {
@@ -623,4 +625,9 @@ fit_dfa <- function(y = y,
 
   out <- structure(out, class = "bayesdfa")
   out
+}
+
+#' Return DFA Stan code
+get_dfa_stancode = function() {
+  stanmodels$dfa
 }
